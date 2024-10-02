@@ -10,40 +10,29 @@ import (
 type Task struct {
 	ID          int
 	Description string
-	Status      string
+	Update      string
 	CreatedAt   time.Time
-	UpdatedAt   time.Time
 }
 
 type Todo []Task
 
-func (t *Todo) Add(ID int, Description, Status string) {
+func (t *Todo) Add(ID int, Description, Update string) {
 	todo := Task{
 		ID:          ID,
 		Description: Description,
-		Status:      Status,
+		Update:      Update,
 		CreatedAt:   time.Now(),
-		UpdatedAt:   time.Time{},
 	}
 	*t = append(*t, todo)
 }
 
-func (t *Todo) StatusChange(ID int) error {
+func (t *Todo) UpdateStatus(ID int) error {
 	ls := *t
 	if ID <= 0 || ID > len(ls) {
 		return errors.New("invalid index")
 	}
-	ls[ID-1].Status = "Complete"
-	ls[ID].Status = "In progress"
-	return nil
-}
-
-func (t *Todo) Update(ID int) error {
-	ls := *t
-	if ID <= 0 || ID > len(ls) {
-		return errors.New("invalid index")
-	}
-	ls[ID].UpdatedAt = time.Now()
+	ls[ID-1].Update = "Complete"
+	ls[ID].Update = "In progress"
 	return nil
 }
 
